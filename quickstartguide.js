@@ -102,6 +102,10 @@ function detectBombStatus(data) {
     if (readProperty(data, 'round.bomb') == 'planted') {
         output += 'Die Bombe wurde gelegt: ';
         bombtimer();
+    }else if(readProperty(data, 'round.bomb') == 'exploaded'){
+        output += 'Die Bombe ist explodiert.'
+    }else if(readProperty(data, 'round.bomb') == 'defused'){
+        output += 'Die Bombe wurde defused.'
     }
 
 }
@@ -113,7 +117,7 @@ function bombtimer() {
     function countdown() {
         if (bombtime == -1) {
             clearTimeout(timerId);
-            doSomething();
+
         } else {
             elem.innerHTML = bombTime + ' seconds left';
             bombtime--;
