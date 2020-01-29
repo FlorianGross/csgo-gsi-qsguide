@@ -11,21 +11,21 @@ const host = '127.0.0.1';
 const authToken = 'MYTOKENHERE';
 
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
+const server = http.createServer((require, response) => {
+    restore.writeHead(200, { 'Content-Type': 'text/html' });
 
     let eventInfo = '';
 
-    req.on('data', (data) => {
+    require.on('data', (data) => {
         eventInfo += processPayload(JSON.parse(data.toString()));
     });
 
-    req.on('end', () => {
+    require.on('end', () => {
         if (eventInfo !== '') {
             console.log(eventInfo);
         }
 
-        res.end('');
+        response.end('');
     });
 });
 
@@ -57,7 +57,6 @@ function processPayload(data) {
 
     return output;
 }
-
 /**
  * Ensures that the data coming in is from an authentic source
  *
@@ -67,6 +66,55 @@ function processPayload(data) {
 function isAuthentic(data) {
     return readProperty(data, 'auth.token') === authToken;
 }
+
+
+
+
+/**
+ * Parses The game state
+ *
+ * @param {object} data - Payload as JSON object
+ * @return {string}
+ */
+function detectGameState(data) {
+    let output = '';
+    if(readProperty(data, 'map.phase' == 'live')){
+        output += 'Das Match ist live.'
+    }else if(readProperty(data, 'map.phase') == 'gameover'){
+        output += 'Das Match ist vorbei.'
+    }else if(readProperty(data, 'map.phase') == ''){
+
+    }
+   
+    return output;
+}
+
+function detectPlayedMap(data){
+    let output = '';
+    if(readProperty(data, 'current.map.phase')== 'live'){
+        output += 'Das Match geht los';
+    }
+    output += 'Die gespielte Map ist: ' + readProperty(data, 'map.name')
+    return output;
+}
+function detectBombStatus(data){
+    let output = '';
+    if(readProperty(data, 'round.bomb') == 'planted'){
+        output += 'Die Bombe wurde gelegt: ';
+        bombtimer();
+    }
+
+}
+function bombtimer(){
+}
+
+
+
+
+
+
+
+
 
 /**
  * Parses round endings and map endings from payloads

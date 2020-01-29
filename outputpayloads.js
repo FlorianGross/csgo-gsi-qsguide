@@ -4,19 +4,19 @@ fs = require('fs');
 port = 3000;
 host = '127.0.0.1';
 
-server = http.createServer(function(req, res) {
+server = http.createServer(function(require, response) {
     console.log('Handling POST request...');
 
     var body = '';
 
-    req.on('data', function (data) {
+    require.on('data', function (data) {
         body += data;
     });
 
-    req.on('end', function () {
+    require.on('end', function () {
         console.log('POST payload: ' + body);
 
-        res.end('');
+        response.end('');
     });
 });
 
