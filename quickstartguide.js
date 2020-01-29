@@ -103,22 +103,17 @@ function detectBombStatus(data) {
         output += 'Die Bombe wurde gelegt: ';
         bombtimer();
     } else if (readProperty(data, 'round.bomb') == 'exploaded') {
-        output += 'Die Bombe ist explodiert.'
+        output += 'Die Bombe ist explodiert.';
+        document.getElementById("hiddenMessage").style.display = 'none';
     } else if (readProperty(data, 'round.bomb') == 'defused') {
-        output += 'Die Bombe wurde defused.'
+        output += 'Die Bombe wurde defused.';
+        document.getElementById("hiddenMessage").style.display = 'none';
     }
 
 }
 
-function bombtimer() {
-    document.getElementById("hiddenMessage").style.display = 'block';
-
-}
-
-
-
 jQuery(function ($) {
-
+    document.getElementById("hiddenMessage").style.display = 'block';
     var seconds = $('#seconds');
     var milliseconds = $('#milliseconds');
 
@@ -131,15 +126,16 @@ jQuery(function ($) {
     function setDate() {
 
         is_int(i);
-        seconds.html('<strong>' + Math.floor(s) + '</strong> Sekunden' + (s > 1 ? 's' : ''));
+        seconds.html('<strong>' + Math.floor(s) + '</strong> seconds' + (s > 1 ? 's' : ''));
 
         isZero(ms);
-        milliseconds.html('<strong>' + ms + '</strong> Millisekunden' + (ms > 1 ? 's' : ''));
+        milliseconds.html('<strong>' + ms + '</strong> milliseconds' + (ms > 1 ? 's' : ''));
         if (s != 0) {
-        setTimeout(setDate, 10);
+            setTimeout(setDate, 10);
+        }
+        document.getElementById("hiddenMessage").style.display = 'none';
     }
-}
- 
+
     function is_int(value) {
         if ((parseFloat(value / 100) == parseInt(value / 100)) && !isNaN(value)) {
             i++;
@@ -149,14 +145,16 @@ jQuery(function ($) {
         }
     };
 
-function isZero(value) {
-    if (value == 0) {
-        ms = 1000;
-    }
-    else {
-        ms -= 10;
-    }
-};
+    function isZero(value) {
+        if (value == 0 && s != 0) {
+            ms = 1000;
+        }else if(value == 0 && s == 0){
+            ms = 0;
+        }
+        else {
+            ms -= 10;
+        }
+    };
 });
 
 
