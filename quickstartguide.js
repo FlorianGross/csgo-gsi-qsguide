@@ -78,34 +78,47 @@ function isAuthentic(data) {
  */
 function detectGameState(data) {
     let output = '';
-    if(readProperty(data, 'map.phase' == 'live')){
+    if (readProperty(data, 'map.phase' == 'live')) {
         output += 'Das Match ist live.'
-    }else if(readProperty(data, 'map.phase') == 'gameover'){
+    } else if (readProperty(data, 'map.phase') == 'gameover') {
         output += 'Das Match ist vorbei.'
-    }else if(readProperty(data, 'map.phase') == ''){
+    } else if (readProperty(data, 'map.phase') == '') {
 
     }
-   
+
     return output;
 }
 
-function detectPlayedMap(data){
+function detectPlayedMap(data) {
     let output = '';
-    if(readProperty(data, 'current.map.phase')== 'live'){
+    if (readProperty(data, 'current.map.phase') == 'live') {
         output += 'Das Match geht los';
     }
     output += 'Die gespielte Map ist: ' + readProperty(data, 'map.name')
     return output;
 }
-function detectBombStatus(data){
+function detectBombStatus(data) {
     let output = '';
-    if(readProperty(data, 'round.bomb') == 'planted'){
+    if (readProperty(data, 'round.bomb') == 'planted') {
         output += 'Die Bombe wurde gelegt: ';
         bombtimer();
     }
 
 }
-function bombtimer(){
+function bombtimer() {
+    var bombTime = 40;
+    var elem = document.getElementById('bombcountdown');
+    var timerId = setInterval(countdown, 1000);
+
+    function countdown() {
+        if (bombtime == -1) {
+            clearTimeout(timerId);
+            doSomething();
+        } else {
+            elem.innerHTML = bombTime + ' seconds left';
+            bombtime--;
+        }
+    }
 }
 
 
