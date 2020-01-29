@@ -126,10 +126,11 @@ jQuery(function ($) {
     function setDate() {
 
         is_int(i);
-        seconds.html('<strong>' + Math.floor(s) + '</strong> seconds' + (s > 1 ? 's' : ''));
+        seconds.html('<strong>' + Math.floor(s) + '</strong> Seconde' + (s > 1 ? 's' : ''));
 
         isZero(ms);
-        milliseconds.html('<strong>' + ms + '</strong> milliseconds' + (ms > 1 ? 's' : ''));
+        milliseconds.html('<strong>' + ms + '</strong> Milliseconde' + (ms > 1 ? 's' : ''));
+
         if (s != 0) {
             setTimeout(setDate, 10);
         }
@@ -148,7 +149,7 @@ jQuery(function ($) {
     function isZero(value) {
         if (value == 0 && s != 0) {
             ms = 1000;
-        }else if(value == 0 && s == 0){
+        } else if (value == 0 && s == 0) {
             ms = 0;
         }
         else {
