@@ -102,29 +102,62 @@ function detectBombStatus(data) {
     if (readProperty(data, 'round.bomb') == 'planted') {
         output += 'Die Bombe wurde gelegt: ';
         bombtimer();
-    }else if(readProperty(data, 'round.bomb') == 'exploaded'){
+    } else if (readProperty(data, 'round.bomb') == 'exploaded') {
         output += 'Die Bombe ist explodiert.'
-    }else if(readProperty(data, 'round.bomb') == 'defused'){
+    } else if (readProperty(data, 'round.bomb') == 'defused') {
         output += 'Die Bombe wurde defused.'
     }
 
 }
 
 function bombtimer() {
-    var bombTime = 40;
-    var elem = document.getElementById('bombCountdown');
-    var timerId = setInterval(countdown, 1000);
-    index.getElementById("hiddenMessage").style.display = 'block'; 
-    function countdown() {
-        if (bombtime == -1) {
-            clearTimeout(timerId);
+    document.getElementById("hiddenMessage").style.display = 'block';
 
-        } else {
-            elem.innerHTML = bombTime + ' seconds left';
-            bombtime--;
-        }
+}
+
+
+
+jQuery(function ($) {
+
+    var seconds = $('#seconds');
+    var milliseconds = $('#milliseconds');
+
+    var s = 40;
+    var ms = 1000;
+    var i = 1;
+
+    setDate();
+
+    function setDate() {
+
+        is_int(i);
+        seconds.html('<strong>' + Math.floor(s) + '</strong> Sekunden' + (s > 1 ? 's' : ''));
+
+        isZero(ms);
+        milliseconds.html('<strong>' + ms + '</strong> Millisekunden' + (ms > 1 ? 's' : ''));
+        if (s != 0) {
+        setTimeout(setDate, 10);
     }
 }
+ 
+    function is_int(value) {
+        if ((parseFloat(value / 100) == parseInt(value / 100)) && !isNaN(value)) {
+            i++;
+            s -= 1;
+        } else {
+            i++;
+        }
+    };
+
+function isZero(value) {
+    if (value == 0) {
+        ms = 1000;
+    }
+    else {
+        ms -= 10;
+    }
+};
+});
 
 
 
