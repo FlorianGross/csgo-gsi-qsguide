@@ -104,61 +104,43 @@ function detectBombStatus(data) {
         bombtimer();
     } else if (readProperty(data, 'round.bomb') == 'exploaded') {
         output += 'Die Bombe ist explodiert.';
-        document.getElementById("hiddenMessage").style.display = 'none';
     } else if (readProperty(data, 'round.bomb') == 'defused') {
         output += 'Die Bombe wurde defused.';
-        document.getElementById("hiddenMessage").style.display = 'none';
     }
 
 }
 
-jQuery(function ($) {
-    document.getElementById("hiddenMessage").style.display = 'block';
-    var seconds = $('#seconds');
-    var milliseconds = $('#milliseconds');
-
-    var s = 40;
-    var ms = 1000;
-    var i = 1;
-
-    setDate();
-
-    function setDate() {
-
-        is_int(i);
-        seconds.html('<strong>' + Math.floor(s) + '</strong> Seconde' + (s > 1 ? 's' : ''));
-
-        isZero(ms);
-        milliseconds.html('<strong>' + ms + '</strong> Milliseconde' + (ms > 1 ? 's' : ''));
-
-        if (s != 0) {
-            setTimeout(setDate, 10);
-        }
-        document.getElementById("hiddenMessage").style.display = 'none';
+var bar = new ProgressBar.SemiCircle(container, {
+    strokeWidth: 6,
+    color: '#FFEA82',
+    trailColor: '#eee',
+    trailWidth: 1,
+    easing: 'easeInOut',
+    duration: 1400,
+    svgStyle: null,
+    text: {
+      value: '',
+      alignToBottom: false
+    },
+    from: {color: '#FFEA82'},
+    to: {color: '#ED6A5A'},
+    // Set default step function for all animate calls
+    step: (state, bar) => {
+      bar.path.setAttribute('stroke', state.color);
+      var value = Math.round(bar.value() * 100);
+      if (value === 0) {
+        bar.setText('');
+      } else {
+        bar.setText(value);
+      }
+  
+      bar.text.style.color = state.color;
     }
-
-    function is_int(value) {
-        if ((parseFloat(value / 100) == parseInt(value / 100)) && !isNaN(value)) {
-            i++;
-            s -= 1;
-        } else {
-            i++;
-        }
-    };
-
-    function isZero(value) {
-        if (value == 0 && s != 0) {
-            ms = 1000;
-        } else if (value == 0 && s == 0) {
-            ms = 0;
-        }
-        else {
-            ms -= 10;
-        }
-    };
-});
-
-
+  });
+  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+  bar.text.style.fontSize = '2rem';
+  
+  bar.animate(1.0); 
 
 
 
