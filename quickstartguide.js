@@ -109,11 +109,12 @@ function detectBombStatus(data) {
     }
 
 }
+
 function bombtimer() {
     var bombTime = 40;
-    var elem = document.getElementById('bombcountdown');
+    var elem = document.getElementById('bombCountdown');
     var timerId = setInterval(countdown, 1000);
-
+    index.getElementById("hiddenMessage").style.display = 'block'; 
     function countdown() {
         if (bombtime == -1) {
             clearTimeout(timerId);
