@@ -66,10 +66,6 @@ function processPayload(data) {
 function isAuthentic(data) {
     return readProperty(data, 'auth.token') === authToken;
 }
-
-
-
-
 /**
  * Parses The game state
  *
@@ -88,7 +84,6 @@ function detectGameState(data) {
 
     return output;
 }
-
 function detectPlayedMap(data) {
     let output = '';
     if (readProperty(data, 'current.map.phase') == 'live') {
@@ -109,7 +104,11 @@ function detectBombStatus(data) {
     }
 
 }
-
+function detectPlayerEqipment(data){
+    let output = '';
+    output += readProperty(data, 'player.name');
+    return output;
+}
 /**
  * Parses round endings and map endings from payloads
  *
@@ -159,7 +158,6 @@ function detectRoundAndMapEnd(data) {
 
     return output;
 }
-
 /**
  * Helper function to read values under nested paths from objects
  *
